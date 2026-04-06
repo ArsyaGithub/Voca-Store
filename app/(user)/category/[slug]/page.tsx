@@ -1,5 +1,5 @@
-import { getCategoryBySlug } from "@/lib/api/category"
-import ProductCard from "@/components/ProductCard"
+﻿import { getCategoryBySlug } from "@/lib/api/category"
+import ProductCard from "@/components/product/ProductCard"
 import { notFound } from "next/navigation"
 import { Product } from "@/types/product"
 

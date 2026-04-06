@@ -1,7 +1,7 @@
 import api from "../axios"
 import { handleApiError } from "../utils"
 import { Category, CategoryWithProducts } from "@/types/category"
-import { getAuthHeaders } from "../auth-server"
+import { clientApi } from "../client-api"
 
 export async function getCategories(): Promise<Category[]> {
   try {
@@ -23,45 +23,35 @@ export async function getCategoryBySlug(slug: string): Promise<CategoryWithProdu
 }
 
 export async function addCategory(data: { name: string; icon: File }) {
-  const headers = await getAuthHeaders()
-
   const formData = new FormData()
   formData.append("name", data.name)
   formData.append("icon", data.icon)
 
   try {
-    const response = await api.post<{ data: Category }>(
+    const response = await clientApi.post<{ data: Category }>(
       "/api/admin/category",
-      formData,
-      {
-        headers: {
-          ...headers,
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      formData
     )
 
-    return response.data?.data
+    return response.data
   } catch (error: unknown) {
     handleApiError(error)
   }
 }
 
-export async function deleteCategory(id : number) {
-  const headers = await getAuthHeaders()
+export async function deleteCategory(id: number) {
   try {
-    const response = await api.delete<{ data: Category }>(`/api/admin/category/${id}`, { headers })
-    return response.data?.data
+    const response = await clientApi.delete<{ data: Category }>(`/api/admin/category/${id}`)
+    return response.data
   } catch (error: unknown) {
     handleApiError(error)
   }
 }
 
-export async function editCategory(id: number, payload: Pick<Category, "name">) {
-  const headers = await getAuthHeaders()
+export async function editCategory(id: number, formData: FormData) {
   try {
-    const response = await api.put<{ data: Category }>(`/api/admin/category/${id}`, payload, { headers })
-    return response.data?.data
+    const response = await clientApi.put<{ data: Category }>(`/api/admin/category/${id}`, formData)
+    return response.data
   } catch (error: unknown) {
     handleApiError(error)
   }

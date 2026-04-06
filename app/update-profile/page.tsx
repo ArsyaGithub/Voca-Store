@@ -1,5 +1,5 @@
-import { getUser } from "@/lib/api/user"
-import ProfileForm from "@/components/update-form"
+﻿import { getUser } from "@/lib/api/user"
+import ProfileForm from "@/components/auth/update-form"
 import { redirect } from "next/navigation"
 
 export default async function UpdateProfilePage() {

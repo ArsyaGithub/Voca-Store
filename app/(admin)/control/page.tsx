@@ -1,5 +1,5 @@
-import { getProducts } from '@/lib/api/product'
-import AdminProductSection from '@/components/AdminProductSection'
+﻿import { getProducts } from '@/lib/api/product'
+import AdminProductSection from '@/components/product/AdminProductSection'
 
 async function AdminProductPage() {
   const products = await getProducts()
@@ -13,3 +13,4 @@ async function AdminProductPage() {
 }
 export default AdminProductPage
 export const dynamic = "force-dynamic"
+

@@ -69,7 +69,7 @@ export default function CheckProductsPage() {
             setLoading(true)
             setError(null)
             const data = await getCheckout()
-            setOrders(data)
+            setOrders((data ?? []) as ApiOrder[])
         } catch (err: unknown) {
             if(err instanceof Error) {
                 setError(err?.message)

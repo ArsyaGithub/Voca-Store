@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AvailableCoupon, MyCoupon } from "@/types/coupon";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { getCoupon, getMyCoupon, claimCoupon } from "@/lib/api/Coupun";
+import { getCoupon, getMyCoupon, claimCoupon } from "@/lib/api/coupon";
 import { CouponHeader } from "@/components/coupons/CouponHeader";
 import { AvailableCouponCard } from "@/components/coupons/AvailableCouponCard";
 import { MyCouponCard } from "@/components/coupons/MyCouponCard";

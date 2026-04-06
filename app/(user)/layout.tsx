@@ -1,6 +1,6 @@
-import { getUser } from "@/lib/api/user"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
+﻿import { getUser } from "@/lib/api/user"
+import Header from "@/components/layout/Header"
+import Footer from "@/components/layout/Footer"
 import { CartProvider } from "@/context/CartContext"
 
 export default async function UserLayout({

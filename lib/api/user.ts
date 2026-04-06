@@ -26,6 +26,24 @@ export async function getUserClient(): Promise<User | undefined> {
   }
 }
 
+export async function forgotPassword(email: string) {
+  try {
+    const response = await clientApi.post("/forgot-password", { email })
+    return response
+  } catch (error: unknown) {
+    handleApiError(error)
+  }
+}
+
+export async function resetPassword(data: { email: string; otp: string; new_password: string }) {
+  try {
+    const response = await clientApi.post("/verify-otp", data)
+    return response
+  } catch (error: unknown) {
+    handleApiError(error)
+  }
+}
+
 export async function updateUser(data: FormData) {
   try {
     const response = await clientApi.put("/api/profile", data)

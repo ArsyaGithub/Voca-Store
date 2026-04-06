@@ -1,16 +1,20 @@
-import UserLayout from "./(user)/layout"
-import ProductCard from '@/components/ProductCard'
-import { getProducts } from '@/lib/api/product'
-import FeaturedCarousel from "@/components/FeaturedCarousel"
-import { getCategories } from '@/lib/api/category'
-import { CategoryCard } from "@/components/CardCategory"
-import Link from "next/link"
+﻿import UserLayout from "./(user)/layout"
+import ProductCard from "@/components/product/ProductCard"
+import { getProducts } from "@/lib/api/product"
+import FeaturedCarousel from "@/components/product/FeaturedCarousel"
+import { getCategories } from "@/lib/api/category"
+import { CategoryCard } from "@/components/shared/CardCategory"
 import Image from "next/image"
-import { ArrowRight, Sparkles, LayoutGrid, ShoppingBag } from "lucide-react"
+import { Sparkles, LayoutGrid, ShoppingBag } from "lucide-react"
+import { SectionHeader } from "@/components/shared/SectionHeader"
+
+const MAX_DISPLAY_ITEMS = 8
 
 export default async function DashboardPage() {
-  const categories = await getCategories()
-  const products = await getProducts()
+  const [categories, products] = await Promise.all([
+    getCategories(),
+    getProducts(),
+  ])
 
   return (
     <UserLayout>
@@ -44,10 +48,10 @@ export default async function DashboardPage() {
                   <Image
                     src="/acer.png"
                     alt="Acer Nitro Lite 16"
-                    width={500} // Ukuran diperbesar agar terlihat seperti hero product
-                    height={500}
+                    width={800}
+                    height={800}
                     className="relative z-10 drop-shadow-2xl object-contain transform group-hover:scale-105 transition-transform duration-500"
-                    priority // Menandakan gambar ini penting untuk dimuat cepat
+                    priority
                   />
                 </div>
               </div>
@@ -58,7 +62,7 @@ export default async function DashboardPage() {
 
 
         <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-12">
-          <section>
+          <section className="rounded-3xl bg-teal-50/50 border border-teal-100 shadow-sm p-8" >
             <div className="flex items-center gap-2 mb-6">
               <div className="p-2 bg-amber-100 rounded-lg text-amber-600">
                 <Sparkles size={20} />
@@ -67,32 +71,22 @@ export default async function DashboardPage() {
                 Hot Produk
               </h2>
             </div>
-            <div className="rounded-3xl shadow-2xl shadow-slate-200">
-              <FeaturedCarousel products={products.slice(0, 8)} />
+            <div className="">
+              <FeaturedCarousel products={products.slice(0, MAX_DISPLAY_ITEMS)} />
             </div>
           </section>
 
           <section>
-            <div className="flex items-end justify-between mb-6">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-teal-600 font-bold uppercase tracking-wider text-xs">
-                  <LayoutGrid size={14} />
-                  <span>Kategori</span>
-                </div>
-                <h2 className="text-2xl font-bold text-slate-800">Jelajahi Kategori</h2>
-              </div>
-
-              <Link
-                href="/category"
-                className="group flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700 transition-all"
-              >
-                Lihat Semua
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
+            <SectionHeader
+              icon={LayoutGrid}
+              label="Kategori"
+              title="Jelajahi Kategori"
+              href="/category"
+              linkText="Lihat Semua"
+            />
 
             <div className="flex flex-nowrap overflow-x-auto gap-4 md:gap-6 pb-4 no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
-              {categories.slice(0, 8).map((category) => (
+              {categories.slice(0, MAX_DISPLAY_ITEMS).map((category) => (
                 <CategoryCard
                   key={category.id}
                   icon_url={category.icon_url}
@@ -103,26 +97,16 @@ export default async function DashboardPage() {
           </section>
 
           <section>
-            <div className="flex items-end justify-between mb-6">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-teal-600 font-bold uppercase tracking-wider text-xs">
-                  <ShoppingBag size={14} />
-                  <span>Untuk Anda</span>
-                </div>
-                <h2 className="text-2xl font-bold text-slate-800">Rekomendasi Produk</h2>
-              </div>
-
-              <Link
-                href="/product"
-                className="group flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700 transition-all"
-              >
-                Semua Produk
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
+            <SectionHeader
+              icon={ShoppingBag}
+              label="Untuk Anda"
+              title="Rekomendasi Produk"
+              href="/product"
+              linkText="Semua Produk"
+            />
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-              {products.slice(0, 8).map((item) => (
+              {products.slice(0, MAX_DISPLAY_ITEMS).map((item) => (
                 <div key={item.id} className="hover:-translate-y-1 transition-transform duration-300">
                   <ProductCard
                     id={item.id}

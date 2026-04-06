@@ -26,19 +26,11 @@ export async function middleware(request: NextRequest) {
     let nextResponse: NextResponse | null = null
 
     // Helper to check if token is expired
-    const isExpired = (token: string) => {
+    const isExpired = (token: string): boolean => {
         try {
-            const base64Url = token.split(".")[1]
-            const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
-            const jsonPayload = decodeURIComponent(
-                atob(base64)
-                    .split("")
-                    .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-                    .join("")
-            )
-            const payload = JSON.parse(jsonPayload)
-            return payload.exp * 1000 < Date.now() + 5000 // 5s buffer
-        } catch (e) {
+            const decoded = jwtDecode<TokenPayload>(token)
+            return decoded.exp * 1000 < Date.now() + 5000 // 5s buffer
+        } catch {
             return true
         }
     }

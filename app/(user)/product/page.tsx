@@ -1,4 +1,4 @@
-import ProductCard from '@/components/ProductCard'
+﻿import ProductCard from '@/components/product/ProductCard'
 import { getProducts } from '@/lib/api/product'
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -36,3 +36,4 @@ async function ProductPage() {
 }
 
 export default ProductPage
+

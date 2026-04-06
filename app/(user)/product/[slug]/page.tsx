@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge"
+﻿import { Badge } from "@/components/ui/badge"
 import { getProductsBySlug } from "@/lib/api/product"
 import { getCategories } from "@/lib/api/category"
 import { Star, ShieldCheck, Tag, ChevronRight } from "lucide-react"
 import Image from "next/image"
-import { ProductActions } from "@/components/ProductActions" 
+import { ProductActions } from "@/components/product/ProductActions" 
 import Link from "next/link"
 import { formatRupiah } from "@/lib/utils"
 

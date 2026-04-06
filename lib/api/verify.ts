@@ -1,16 +1,18 @@
 import { clientApi } from "../client-api"
 import { handleApiError } from "../utils"
 
+// Note: getCheckout returns admin order entries (ApiOrder shape defined in check-products/page.tsx)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getCheckout() {
     try {
-        const response = await clientApi.get<{ data: { entries: any[] } }>("/api/admin/checkout")
+        const response = await clientApi.get<{ data: { entries: unknown[] } }>("/api/admin/checkout")
         return response.data.entries
     } catch (error) {
         handleApiError(error)
     }
 }
 
-export async function verifyCartApproved(id: number) {  
+export async function verifyCartApproved(id: number) {
     try {
         const response = await clientApi.patch(`/api/admin/checkout/${id}/approve`)
         return response
@@ -23,15 +25,6 @@ export async function verifyCartRejected(id: number) {
     try {
         const response = await clientApi.patch(`/api/admin/checkout/${id}/reject`)
         return response
-    } catch (error) {
-        handleApiError(error)
-    }
-}
-
-export async function getMyCheckout() {
-    try {
-        const response = await clientApi.get<{ data: { entries: any[] } }>("/api/checkout/me")
-        return response.data.entries
     } catch (error) {
         handleApiError(error)
     }

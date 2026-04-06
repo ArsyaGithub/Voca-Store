@@ -4,59 +4,79 @@
 const PROXY_BASE = "/api/proxy"
 
 interface FetchOptions {
-    method?: string
-    body?: unknown
-    headers?: Record<string, string>
+  method?: string
+  body?: unknown
+  headers?: Record<string, string>
 }
 
-async function clientFetch<T>(path: string, options: FetchOptions = {}): Promise<T> {
-    const { method = "GET", body, headers = {} } = options
+export class ClientApiError extends Error {
+  status: number
+  data: Record<string, unknown>
 
-    const fetchOptions: RequestInit = {
-        method,
-        headers: {
-            ...headers,
-        },
+  constructor(
+    message: string,
+    status: number,
+    data: Record<string, unknown> = {}
+  ) {
+    super(message)
+    this.name = "ClientApiError"
+    this.status = status
+    this.data = data
+  }
+}
+
+async function clientFetch<T>(
+  path: string,
+  options: FetchOptions = {}
+): Promise<T> {
+  const { method = "GET", body, headers = {} } = options
+
+  const fetchOptions: RequestInit = {
+    method,
+    headers: {
+      ...headers,
+    },
+  }
+
+  if (body) {
+    if (body instanceof FormData) {
+      // FormData — biarkan browser set Content-Type dengan boundary
+      fetchOptions.body = body
+    } else {
+      fetchOptions.headers = {
+        "Content-Type": "application/json",
+        ...headers,
+      }
+      fetchOptions.body = JSON.stringify(body)
     }
+  }
 
-    if (body) {
-        if (body instanceof FormData) {
-            // FormData — biarkan browser set Content-Type dengan boundary
-            fetchOptions.body = body
-        } else {
-            fetchOptions.headers = {
-                "Content-Type": "application/json",
-                ...headers,
-            }
-            fetchOptions.body = JSON.stringify(body)
-        }
-    }
+  const response = await fetch(`${PROXY_BASE}${path}`, fetchOptions)
 
-    const response = await fetch(`${PROXY_BASE}${path}`, fetchOptions)
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new ClientApiError(
+      errorData.message || `Request failed: ${response.status}`,
+      response.status,
+      errorData
+    )
+  }
 
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        const error = new Error(errorData.message || `Request failed: ${response.status}`)
-            ; (error as any).status = response.status
-            ; (error as any).data = errorData
-        throw error
-    }
-
-    return response.json()
+  return response.json()
 }
 
 export const clientApi = {
-    get: <T = any>(path: string) => clientFetch<T>(path),
+  get: <T = unknown>(path: string) => clientFetch<T>(path),
 
-    post: <T = any>(path: string, body?: unknown) =>
-        clientFetch<T>(path, { method: "POST", body }),
+  post: <T = unknown>(path: string, body?: unknown) =>
+    clientFetch<T>(path, { method: "POST", body }),
 
-    put: <T = any>(path: string, body?: unknown) =>
-        clientFetch<T>(path, { method: "PUT", body }),
+  put: <T = unknown>(path: string, body?: unknown) =>
+    clientFetch<T>(path, { method: "PUT", body }),
 
-    patch: <T = any>(path: string, body?: unknown) =>
-        clientFetch<T>(path, { method: "PATCH", body }),
+  patch: <T = unknown>(path: string, body?: unknown) =>
+    clientFetch<T>(path, { method: "PATCH", body }),
 
-    delete: <T = any>(path: string, body?: unknown) =>
-        clientFetch<T>(path, { method: "DELETE", body }),
+  delete: <T = unknown>(path: string, body?: unknown) =>
+    clientFetch<T>(path, { method: "DELETE", body }),
 }
