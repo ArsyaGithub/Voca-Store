@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ShoppingCart, Loader2 } from "lucide-react"
 import { useCart } from "@/context/CartContext"
 import { notifyError } from "@/lib/toast"
+import Link from "next/link"
 
 interface ProductActionsProps {
   productId: number;
@@ -51,7 +52,7 @@ export function ProductActions({ productId, stock }: ProductActionsProps) {
         className="h-14 px-8"
         disabled={stock <= 0}
       >
-        Beli Sekarang
+        <Link href="/">Beli Sekarang</Link>
       </Button>
     </div>
   )

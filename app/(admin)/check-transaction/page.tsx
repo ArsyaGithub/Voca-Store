@@ -11,24 +11,12 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import { formatRupiah } from '@/lib/utils'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Eye, ShoppingCart, CheckCircle2, AlertCircle, Loader2, RefreshCw } from "lucide-react"
+import { ShoppingCart, CheckCircle2, AlertCircle, Loader2, RefreshCw } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { getCheckout } from '@/lib/api/verify'
-import { verifyCartApproved, verifyCartRejected } from "@/lib/api/verify"
-import { notifySuccess, notifyError } from '@/lib/toast' 
+
 type OrderStatus = 'pending' | 'approved' | 'rejected'
 
 interface ApiProduct {
@@ -97,44 +85,44 @@ export default function CheckProductsPage() {
         })
     }
 
-    const handleApprove = async (id: number) => {
-        try {
-            await verifyCartApproved(id)
+    // const handleApprove = async (id: number) => {
+    //     try {
+    //         await verifyCartApproved(id)
 
-            // update state setelah API sukses
-            setOrders(prev =>
-                prev.map(order =>
-                    order.id === id
-                        ? { ...order, status: "approved" as OrderStatus }
-                        : order
-                )
-            )
-            notifySuccess("Pesanan di terima")
-        } catch (err) {
-            console.error("Gagal approve:", err)
-        }
-    }
+    //         // update state setelah API sukses
+    //         setOrders(prev =>
+    //             prev.map(order =>
+    //                 order.id === id
+    //                     ? { ...order, status: "approved" as OrderStatus }
+    //                     : order
+    //             )
+    //         )
+    //         notifySuccess("Pesanan di terima")
+    //     } catch (err) {
+    //         console.error("Gagal approve:", err)
+    //     }
+    // }
 
 
-    // Handle Reject (local state only — belum ada endpoint API)
-    const handleReject = async (id: number) => {
-        try {
-            await verifyCartRejected(id)
+    // // Handle Reject (local state only — belum ada endpoint API)
+    // const handleReject = async (id: number) => {
+    //     try {
+    //         await verifyCartRejected(id)
 
-            // update state setelah API sukses
-            setOrders(prev =>
-                prev.map(order =>
-                    order.id === id
-                        ? { ...order, status: "rejected" as OrderStatus }
-                        : order
-                )
-            )
+    //         // update state setelah API sukses
+    //         setOrders(prev =>
+    //             prev.map(order =>
+    //                 order.id === id
+    //                     ? { ...order, status: "rejected" as OrderStatus }
+    //                     : order
+    //             )
+    //         )
             
-            notifySuccess("Pesanan di tolaK")
-        } catch (err) {
-            console.error("Gagal reject:", err)
-        }
-    }
+    //         notifySuccess("Pesanan di tolaK")
+    //     } catch (err) {
+    //         console.error("Gagal reject:", err)
+    //     }
+    // }
 
 
 

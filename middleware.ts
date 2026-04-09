@@ -118,12 +118,15 @@ export async function middleware(request: NextRequest) {
         pathname.startsWith("/orders") ||
         pathname.startsWith("/coupons") ||
         pathname.startsWith("/notifications") ||
-        pathname.startsWith("/update-profile")
+        pathname.startsWith("/update-profile") ||
+        pathname.startsWith("/chat")
 
     const isProtectedAdminRoute =
         pathname.startsWith("/control") ||
         pathname.startsWith("/add-products") ||
-        pathname.startsWith("/check-products")
+        pathname.startsWith("/check-products") ||
+        pathname.startsWith("/customer-service") ||
+        pathname.startsWith("/system") 
 
     // Logged in user hitting auth pages
     if (accessToken && role && isAuthRoute) {

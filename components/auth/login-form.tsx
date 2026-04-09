@@ -102,7 +102,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
               <Field>
                 <div className="flex items-center justify-between">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <Link href="#" className="text-sm underline">Forgot password?</Link>
+                  <Link href="/forgot-password" className="text-sm underline">Forgot password?</Link>
                 </div>
                 <Input
                   id="password"
@@ -125,9 +125,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
           <div className="text-center text-sm">
             Don&apos;t have an account?{" "}
             <Link href="/register" className="underline">Sign up</Link>
-          </div>
-          <div className="text-center text-sm">
-            <Link href="/forgot-password" className="underline">Forgot password?</Link>
           </div>
         </div>
       </div>

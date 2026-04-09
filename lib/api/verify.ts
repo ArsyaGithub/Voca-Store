@@ -2,7 +2,6 @@ import { clientApi } from "../client-api"
 import { handleApiError } from "../utils"
 
 // Note: getCheckout returns admin order entries (ApiOrder shape defined in check-products/page.tsx)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getCheckout() {
     try {
         const response = await clientApi.get<{ data: { entries: unknown[] } }>("/api/admin/checkout")

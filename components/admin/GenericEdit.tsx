@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils"
 export type GenericEditFieldType = "text" | "number" | "textarea" | "file" | "select" | "date" 
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type GenericEditField<TValues extends Record<string, any>> = {
     name: keyof TValues & string
     label: string
@@ -36,6 +37,7 @@ export type GenericEditField<TValues extends Record<string, any>> = {
     options?: Array<{ value: string; label: string }>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface GenericEditDialogProps<TValues extends Record<string, any>> {
     open: boolean
     onOpenChange: (open: boolean) => void
@@ -48,6 +50,7 @@ interface GenericEditDialogProps<TValues extends Record<string, any>> {
     onSuccess?: () => void
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function GenericEditDialog<TValues extends Record<string, any>>({
     open,
     onOpenChange,
@@ -74,7 +77,7 @@ export function GenericEditDialog<TValues extends Record<string, any>>({
         const nextPreviews: Record<string, string> = {}
         for (const f of fileFields) {
             const key = f.name
-            const maybeUrl = (initialValues as any)[key]
+            const maybeUrl = (initialValues as Record<string, unknown>)[key]
             if (typeof maybeUrl === "string") nextPreviews[key] = maybeUrl
         }
         setPreviews(nextPreviews)
@@ -83,7 +86,7 @@ export function GenericEditDialog<TValues extends Record<string, any>>({
         setFileValues(nextFiles)
     }, [initialValues, fileFields])
 
-    const setFieldValue = (name: string, value: any) => {
+    const setFieldValue = (name: string, value: unknown) => {
         setValues((prev) => ({ ...prev, [name]: value }))
     }
 
@@ -99,11 +102,11 @@ export function GenericEditDialog<TValues extends Record<string, any>>({
         setIsSubmitting(true)
         setError("")
         try {
-            const submitValues: any = { ...values }
+            const submitValues = { ...values } as Record<string, unknown>
             for (const [k, v] of Object.entries(fileValues)) {
                 submitValues[k] = v
             }
-            const result = await onSubmit(submitValues)
+            const result = await onSubmit(submitValues as unknown as TValues)
             if (!result.success) {
                 setError(result.message)
                 return
@@ -131,7 +134,8 @@ export function GenericEditDialog<TValues extends Record<string, any>>({
                     {fields.map((field) => {
                         const fieldName = field.name
                         const id = `edit-${fieldName}`
-                        const value = (values as any)[fieldName]
+                        const value = (values as Record<string, unknown>)[fieldName]
+                        const stringValue = typeof value === "string" || typeof value === "number" ? value : (value ?? "") as string
 
                         if (field.type === "textarea") {
                             return (
@@ -139,7 +143,7 @@ export function GenericEditDialog<TValues extends Record<string, any>>({
                                     <Label htmlFor={id}>{field.label}</Label>
                                     <Textarea
                                         id={id}
-                                        value={value ?? ""}
+                                        value={stringValue}
                                         onChange={(e) => setFieldValue(fieldName, e.target.value)}
                                         placeholder={field.placeholder}
                                         className="min-h-25"
@@ -193,7 +197,7 @@ export function GenericEditDialog<TValues extends Record<string, any>>({
                                     <select
                                         id={id}
                                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
-                                        value={value ?? ""}
+                                        value={stringValue}
                                         onChange={(e) => setFieldValue(fieldName, e.target.value)}
                                         required={field.required}
                                     >
@@ -255,7 +259,7 @@ export function GenericEditDialog<TValues extends Record<string, any>>({
                                 <Input
                                     id={id}
                                     type={isNumber ? "number" : "text"}
-                                    value={value ?? ""}
+                                    value={stringValue}
                                     onChange={(e) => setFieldValue(fieldName, e.target.value)}
                                     placeholder={field.placeholder}
                                     required={field.required}

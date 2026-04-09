@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import AuthHeroPanel from "@/components/auth/AuthHeroPanel"
 import { forgotPassword } from "@/lib/api/user"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
@@ -35,8 +34,8 @@ export default function ForgotPasswordPage() {
       } else {
         setError("Gagal mengirim OTP. Mohon cek kembali email Anda.")
       }
-    } catch (err: any) {
-      setError(err?.message || "Terjadi kesalahan saat memproses permintaan.")
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan saat memproses permintaan.")
     } finally {
       setIsPending(false)
     }

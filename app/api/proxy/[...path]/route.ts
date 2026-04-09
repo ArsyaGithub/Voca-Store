@@ -70,7 +70,7 @@ async function proxyRequest(request: NextRequest, method: string) {
     const body = await getBody()
 
     try {
-        let backendResponse = await fetch(targetUrl, {
+        const backendResponse = await fetch(targetUrl, {
             method,
             headers: buildHeaders(token),
             body,

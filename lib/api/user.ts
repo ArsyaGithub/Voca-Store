@@ -11,7 +11,7 @@ export async function getUser(): Promise<User | undefined> {
     const headers = await getAuthHeaders()
     const response = await api.get("/api/profile", { headers })
     return response.data.data
-  } catch (error: unknown) {
+  } catch {
     return undefined
   }
 }

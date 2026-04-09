@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useActionState } from "react"
 import { createProduct } from "./actions"
 import { getCategories } from "@/lib/api/category"
@@ -29,17 +29,23 @@ export default function AddProductPage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("")
   const router = useRouter()
+  const prevMessageRef = useRef(state?.message)
+  const formRef = useRef<HTMLFormElement>(null)
 
-useEffect(() => {
-  if (state?.message === "success") {
-    toast.success("Product created successfully")
-    router.push("/add-products")
-  } else if (state?.message && state.message !== "") {
-    toast.error("Error", {
-      description: state.message,
-    })
-  }
-}, [state, router])
+  // Only perform side effects (toast/navigation), no setState calls
+  useEffect(() => {
+    if (state?.message && state.message !== prevMessageRef.current) {
+      prevMessageRef.current = state.message
+      if (state.message === "success") {
+        toast.success("Product created successfully")
+        // Reset form via DOM (not setState)
+        formRef.current?.reset()
+        router.push("/add-products")
+      } else {
+        toast.error("Error", { description: state.message })
+      }
+    }
+  }, [state, router])
 
   useEffect(() => {
     async function fetchCategories() {
@@ -48,13 +54,6 @@ useEffect(() => {
     }
     fetchCategories()
   }, [])
-
-  useEffect(() => {
-  if (state?.message === "success") {
-    setPreview(null)
-    setSelectedCategoryId("")
-  }
-}, [state]) 
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -73,7 +72,7 @@ useEffect(() => {
           </div>
         </div>
 
-        <form action={formAction} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <form ref={formRef} action={formAction} className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 space-y-6">
             <Card>
               <CardHeader>

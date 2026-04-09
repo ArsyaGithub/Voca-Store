@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { ShoppingCart } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -20,7 +20,7 @@ import { useState, useEffect } from "react"
 
 import { CartItem } from "@/types/cart"
 import { checkoutCart, deleteCartItemsMany } from "@/lib/api/cart"
-import { getCoupon, getMyCoupon } from "@/lib/api/coupon"
+import { getMyCoupon } from "@/lib/api/coupon"
 import { notifySuccess, notifyError } from "@/lib/toast"
 import { formatRupiah } from "@/lib/utils"
 import { useUser } from "@/hooks/useUser"
@@ -40,7 +40,7 @@ import { useQueryClient } from "@tanstack/react-query"
 export function CartSheet() {
     const { cart, itemCount, refreshCart } = useCart()
     const { data: user } = useUser()
-    const router = useRouter()
+    const router = useRouter() // eslint-disable-line @typescript-eslint/no-unused-vars
     const queryClient = useQueryClient()
     const [selectedItems, setSelectedItems] = useState<number[]>([])
     const [selectedAddressUid, setSelectedAddressUid] = useState<string>("")
@@ -90,12 +90,12 @@ export function CartSheet() {
 
     const handleCheckout = async () => {
         if (selectedItems.length === 0) {
-            notifyError("Pilih item dulu bang ðŸ˜­")
+            notifyError("Pilih Terlebih Dahulu")
             return
         }
 
         if (!selectedAddressUid) {
-            notifyError("Pilih alamat pengiriman dulu ya!")
+            notifyError("Pilih Alamat Pengiriman Terlebih Dahulu")
             return
         }
 
@@ -109,7 +109,7 @@ export function CartSheet() {
 
             const data: CheckoutDetail = response.data.data
             setCheckoutData(data)
-            notifySuccess("Checkout berhasil ðŸŽ‰")
+            notifySuccess("Checkout berhasil ")
             queryClient.invalidateQueries({ queryKey: ["my-checkouts"] })
             
             refreshCart()
@@ -128,7 +128,7 @@ export function CartSheet() {
         setIsProcessing(true);
         try {
             const myCoupons = await getMyCoupon();
-            const coupon = myCoupons?.find((c: any) => c.coupon_code === couponCode);
+            const coupon = myCoupons?.find((c) => c.coupon_code === couponCode);
 
             if (!coupon) {
                 notifyError("Kupon tidak ditemukan di koleksi Anda.");
@@ -159,7 +159,7 @@ export function CartSheet() {
             } as CheckoutDetail);
 
             notifySuccess("Kupon berhasil diterapkan! ðŸŽ‰");
-        } catch (error) {
+        } catch {
             setCheckoutData(null);
             notifyError("Gagal memeriksa kupon.");
         } finally {

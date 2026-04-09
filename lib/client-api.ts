@@ -1,5 +1,3 @@
-// Client-side fetch helper — semua request melalui Next.js API proxy
-// Token otomatis di-attach oleh proxy dari HttpOnly cookie
 
 const PROXY_BASE = "/api/proxy"
 
@@ -66,17 +64,20 @@ async function clientFetch<T>(
 }
 
 export const clientApi = {
-  get: <T = unknown>(path: string) => clientFetch<T>(path),
+  get: <T = unknown>(path: string, headers?: Record<string, string>) => clientFetch<T>(path, { headers }),
 
-  post: <T = unknown>(path: string, body?: unknown) =>
-    clientFetch<T>(path, { method: "POST", body }),
+  post: <T = unknown>(path: string, body?: unknown, headers?: Record<string, string>) =>
+    clientFetch<T>(path, { method: "POST", body, headers }),
 
-  put: <T = unknown>(path: string, body?: unknown) =>
-    clientFetch<T>(path, { method: "PUT", body }),
+  put: <T = unknown>(path: string, body?: unknown, headers?: Record<string, string>) =>
+    clientFetch<T>(path, { method: "PUT", body, headers }),
 
-  patch: <T = unknown>(path: string, body?: unknown) =>
-    clientFetch<T>(path, { method: "PATCH", body }),
+  patch: <T = unknown>(path: string, body?: unknown, headers?: Record<string, string>) =>
+    clientFetch<T>(path, { method: "PATCH", body, headers }),
 
-  delete: <T = unknown>(path: string, body?: unknown) =>
+  delete: <T = unknown>(path: string, body?: unknown, headers?: Record<string, string>) =>
     clientFetch<T>(path, { method: "DELETE", body }),
+
+  request: <T = unknown>(options: { url: string; method: string; data?: unknown; headers?: Record<string, string> }) =>
+    clientFetch<T>(options.url, { method: options.method, body: options.data, headers: options.headers }),
 }

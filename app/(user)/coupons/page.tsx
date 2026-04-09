@@ -63,7 +63,7 @@ export default function CouponsPage() {
             await claimCoupon(id)
             toast.success(`Kupon ${code} berhasil diklaim!`)
             fetchMine()
-        } catch (error) {
+        } catch {
             setClaimedStatus((prev) => ({ ...prev, [id]: false }))
             toast.error("Gagal mengklaim kupon")
         }

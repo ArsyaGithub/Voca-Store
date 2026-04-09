@@ -79,7 +79,6 @@ export default async function CategoryPage() {
             Hubungi CS
           </button>
         </div>
-
       </div>
     </div>
   )

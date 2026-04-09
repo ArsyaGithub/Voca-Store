@@ -2,6 +2,7 @@
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import { CartProvider } from "@/context/CartContext"
+import ChatWidget from "@/components/layout/ChatWidget"
 
 export default async function UserLayout({
   children,
@@ -14,6 +15,7 @@ export default async function UserLayout({
     <CartProvider>
       <div className="min-h-screen flex flex-col">
         <Header user={user} />
+        <ChatWidget />
         <main className="flex-1">{children}</main>
         <Footer />
       </div>

@@ -16,3 +16,13 @@ export interface Cart {
   created_at: string
   updated_at: string
 }
+
+export interface CartProductCardProps {
+    id: number;
+    slug: string;
+    name: string;
+    category: { id: number, name: string } | string;
+    price: number;
+    stock: number;
+    image: string;
+}

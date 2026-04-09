@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,7 +15,7 @@ import AuthHeroPanel from "@/components/auth/AuthHeroPanel"
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<"div">) {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
+  const [, setLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -43,10 +43,10 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
       }
 
       toast.success("Berhasil", {
-        description: "Akun berhasil dibuat",
+        description: "Akun berhasil dibuat. Silakan login.",
       })
 
-      router.push("/")
+      router.push("/login")
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : "Terjadi kesalahan"
@@ -98,7 +98,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
 
           <div className="text-center text-sm">
             Already have an account?{" "}
-            <Link href="/" className="underline">Sign In</Link>
+            <Link href="/login" className="underline hover:text-teal-600 transition-colors font-medium">Sign In</Link>
           </div>
         </div>
       </div>

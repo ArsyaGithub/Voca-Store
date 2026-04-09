@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,6 @@ import {
 import AuthHeroPanel from "@/components/auth/AuthHeroPanel"
 import { resetPassword } from "@/lib/api/user"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 
 function ResetPasswordForm() {
   const router = useRouter()
@@ -66,8 +65,8 @@ function ResetPasswordForm() {
       } else {
         setError("Gagal mereset password. Mohon cek kembali kode OTP Anda.")
       }
-    } catch (err: any) {
-      setError(err?.message || "Terjadi kesalahan saat mereset password.")
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan saat mereset password.")
     } finally {
       setIsPending(false)
     }

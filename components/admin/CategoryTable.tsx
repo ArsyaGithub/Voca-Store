@@ -1,7 +1,7 @@
-﻿"use client"
+"use client"
 
 import { useState } from "react"
-import { Edit, Trash2, Layers, Sprout, Plus } from "lucide-react"
+import { Edit, Trash2, Layers, Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
@@ -190,10 +190,10 @@ export default function CategoryTable({ categories }: { categories: Category[] }
             try {
               await addCategory({ name: values.name, icon: values.icon! })
               return { success: true }
-            } catch (e: any) {
+            } catch (e: unknown) {
               return {
                 success: false,
-                message: e?.response?.data?.message ?? "Gagal menambahkan kategori",
+                message: e instanceof Error ? e.message : "Gagal menambahkan kategori",
               }
             }
           }}

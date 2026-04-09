@@ -1,10 +1,15 @@
+"use client"
 import Link from "next/link"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Facebook, Instagram, Twitter } from "lucide-react"
+import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 export default function Footer() {
+  const pathname = usePathname()
+  if (pathname === '/chat') return null;
+
   return (
     <footer className="w-full bg-white border-t">
       <div className="container mx-auto px-4 py-12">
@@ -48,7 +53,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2026 Voca Store. All rights reserved.
+            © 2026 Voca Store All rights reserved.
             <Link href="/privacy">| Privacy </Link>
             <Link href="/terms"> | Terms </Link>
             <Link href="/refund"> | Refund</Link>
@@ -56,9 +61,9 @@ export default function Footer() {
 
           </p>
           <div className="flex gap-4">
-            <Link href="#"><Instagram className="w-5 h-5 text-muted-foreground hover:text-teal-600" /></Link>
-            <Link href="#"><Facebook className="w-5 h-5 text-muted-foreground hover:text-teal-600" /></Link>
-            <Link href="#"><Twitter className="w-5 h-5 text-muted-foreground hover:text-teal-600" /></Link>
+            <Link target="_blank" href="https://x.com/search?q=dreamybull"><Twitter className="w-5 h-5 text-muted-foreground hover:text-teal-600" /></Link>
+            <Link target="_blank" href="https://www.instagram.com/popular/msbreewc-official/"><Instagram className="w-5 h-5 text-muted-foreground hover:text-teal-600" /></Link>
+            <Link target="_blank" href="https://www.youtube.com/@AmrulsiGuruDigital"><Youtube className="w-5 h-5 text-muted-foreground hover:text-teal-600" /></Link>
           </div>
         </div>
       </div>

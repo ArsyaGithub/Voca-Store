@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Loader2, MapPin, Phone as PhoneIcon, Home } from "lucide-react"
 import { AddressData } from "@/types/auth"
 import AddAddresses from "./AddAddresses"
-import { Trash2, Pencil } from "lucide-react"
+import { Trash2 } from "lucide-react"
 import { deleteAddress } from "@/lib/api/user"
 import EditAddres from "./EditAddres"
 

@@ -4,9 +4,9 @@ declare global {
       pay: (
         token: string,
         options?: {
-          onSuccess?: (result: any) => void
-          onPending?: (result: any) => void
-          onError?: (result: any) => void
+          onSuccess?: (result: Record<string, unknown>) => void
+          onPending?: (result: Record<string, unknown>) => void
+          onError?: (result: Record<string, unknown>) => void
           onClose?: () => void
         }
       ) => void

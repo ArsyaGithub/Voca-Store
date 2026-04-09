@@ -2,6 +2,7 @@
 
 import { addProduct } from "@/lib/api/product"
 import { revalidatePath } from "next/cache"
+import { getErrorMessage } from "@/lib/utils"
 
 interface FormState {
     message: string;
@@ -17,13 +18,6 @@ export async function createProduct(
     revalidatePath("/control")
     return { message: "success" }
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      const axiosError = error as any
-      if (axiosError.response?.data?.message) {
-        return { message: axiosError.response.data.message }
-      }
-    }
-
-    return { message: "Failed to create product." }
+    return { message: getErrorMessage(error, "Failed to create product.") }
   }
 }

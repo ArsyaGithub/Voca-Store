@@ -1,4 +1,4 @@
-﻿import UserLayout from "./(user)/layout"
+import UserLayout from "./(user)/layout"
 import ProductCard from "@/components/product/ProductCard"
 import { getProducts } from "@/lib/api/product"
 import FeaturedCarousel from "@/components/product/FeaturedCarousel"
@@ -7,6 +7,8 @@ import { CategoryCard } from "@/components/shared/CardCategory"
 import Image from "next/image"
 import { Sparkles, LayoutGrid, ShoppingBag } from "lucide-react"
 import { SectionHeader } from "@/components/shared/SectionHeader"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 
 const MAX_DISPLAY_ITEMS = 8
 
@@ -19,31 +21,35 @@ export default async function DashboardPage() {
   return (
     <UserLayout>
       <div className="min-h-screen bg-slate-50/50">
-        <section className="w-full bg-gradient-to-br from-teal-500 to-teal-700 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
+        <section className="w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden relative border-b border-slate-800 shadow-2xl">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-20 md:py-32 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-              <div className="space-y-6 text-white order-2 md:order-1 text-center md:text-left">
-                <div>
-                  <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4">
-                    Acer Nitro <span className="text-teal-200">Lite 16</span>
+              <div className="space-y-8 text-white order-2 md:order-1 text-center md:text-left animate-in fade-in slide-in-from-left-8 duration-1000">
+                <div className="space-y-4">
+                  <Badge variant="outline" className="text-teal-400 border-teal-500/30 bg-teal-500/10 mb-4 px-3 py-1 font-medium tracking-wide">PILIHAN EDITOR</Badge>
+                  <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-tight">
+                    Acer Nitro <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-teal-200">Lite 16</span>
                   </h1>
-                  <p className="text-teal-50 text-lg md:text-xl opacity-90 max-w-lg mx-auto md:mx-0">
+                  <p className="text-slate-300 text-lg md:text-xl md:leading-relaxed max-w-lg mx-auto md:mx-0 font-medium">
                     Performance Gaming yang Terjangkau. Rasakan kecepatan tanpa batas dengan teknologi pendingin terbaru.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                  <button className=" px-8 py-4 bg-white text-teal-700 font-bold rounded-2xl hover:bg-teal-50 transition-colors shadow-lg">
-                    Beli Sekarang
+                  <button className="px-8 py-4 bg-teal-500 text-white font-bold rounded-xl hover:bg-teal-400 transition-all shadow-lg hover:shadow-teal-500/25 hover:-translate-y-1">
+                    <Link href="/">Beli Sekarang</Link>
                   </button>
-
+                  <button className="px-8 py-4 bg-slate-800/50 text-slate-200 font-bold rounded-xl border border-slate-700 hover:bg-slate-800 transition-all hover:-translate-y-1">
+                    Selengkapnya
+                  </button>
                 </div>
               </div>
 
-              <div className="order-1 md:order-2 flex justify-center items-center">
+              <div className="order-1 md:order-2 flex justify-center items-center animate-in fade-in zoom-in-95 duration-1000 md:delay-150">
                 <div className="relative group animate-bounce-slow">
-                  <div className="absolute inset-0 bg-teal-300 blur-[80px] opacity-20 rounded-full"></div>
+                  <div className="absolute inset-0 bg-teal-400 blur-[100px] opacity-20 rounded-full"></div>
 
                   <Image
                     src="/acer.png"

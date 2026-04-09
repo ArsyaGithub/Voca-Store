@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { GenericEditDialog, type GenericEditField } from "@/components/admin/GenericEdit"
 import { editProductAction } from "@/app/(admin)/control/actions"
@@ -94,7 +94,7 @@ export default function EditProduct({
           }
           const result = await editProductAction(product.id, formData)
           if (!result.success) {
-            return { success: false, message: result.message }
+            return { success: false, message: result.message ?? "Gagal update produk" }
           }
           onSuccess()
           return { success: true }

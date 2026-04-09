@@ -27,3 +27,18 @@ export function handleApiError(error: unknown): never {
   }
   throw new ApiError("Terjadi kesalahan tak terduga")
 }
+
+/**
+ * Safely extract error message from unknown errors (axios-style or standard).
+ */
+export function getErrorMessage(error: unknown, fallback = "Terjadi kesalahan"): string {
+  if (error instanceof Error) {
+    // Check for axios-style response.data.message
+    const errObj = error as unknown as { response?: { data?: { message?: string } } }
+    if (typeof errObj.response?.data?.message === "string") {
+      return errObj.response.data.message
+    }
+    return error.message
+  }
+  return fallback
+}
