@@ -122,7 +122,7 @@ export async function middleware(request: NextRequest) {
         pathname.startsWith("/chat")
 
     const isProtectedAdminRoute =
-        pathname.startsWith("/control") ||
+        pathname.startsWith("/overview") ||
         pathname.startsWith("/add-products") ||
         pathname.startsWith("/check-products") ||
         pathname.startsWith("/customer-service") ||
@@ -130,7 +130,7 @@ export async function middleware(request: NextRequest) {
 
     // Logged in user hitting auth pages
     if (accessToken && role && isAuthRoute) {
-        const redirectUrl = role === "Admin" ? "/control" : "/"
+        const redirectUrl = role === "Admin" ? "/overview" : "/"
         const response = NextResponse.redirect(new URL(redirectUrl, request.url))
         // If we recently refreshed, we MUST persist those cookies to the redirect response
         if (nextResponse) {

@@ -10,7 +10,7 @@ export default function Error(props: {
       {...props}
       title="Panel Admin Bermasalah"
       description="Gagal memuat data admin. Ini mungkin masalah koneksi atau sesi login Anda kadaluarsa."
-      backUrl="/control"
+      backUrl="/overview"
       backLabel="Kembali ke Kontrol"
     />
   )

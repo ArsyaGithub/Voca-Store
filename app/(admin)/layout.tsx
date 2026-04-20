@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               
               <nav className="flex items-center gap-2 text-sm font-medium">
                 <Link 
-                  href="/control" 
+                  href="/overview" 
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Control

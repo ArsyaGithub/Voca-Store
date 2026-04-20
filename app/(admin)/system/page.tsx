@@ -74,7 +74,7 @@ export default function SystemAdminPage() {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-10 bg-slate-50/50 min-h-screen">
+    <div className="p-8 max-w-7xl space-y-10 min-h-screen">
       <header className="space-y-4">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">System Engine</h1>
@@ -221,9 +221,7 @@ interface CardProps {
 
 function ActionCard({ title, desc, method, onRun, isLoading, isDanger, icon }: CardProps) {
   const methodColor: any = {
-    GET: "bg-emerald-100 text-emerald-700 border-emerald-200",
     POST: "bg-indigo-100 text-indigo-700 border-indigo-200",
-    PUT: "bg-amber-100 text-amber-700 border-amber-200",
     DEL: "bg-red-100 text-red-700 border-red-200",
   }
 

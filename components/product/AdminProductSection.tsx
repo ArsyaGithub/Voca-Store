@@ -34,7 +34,9 @@ export default function AdminProductClient({ products }: { products: Product[] }
   }
 
   return (
-    <>
+    <div className="space-y-5">
+      <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Product Management</h1>
+      <p className="text-slate-500 mb-5">Utility untuk mengelola produk.</p>
       <ProductSearch onSearch={handleSearch} />
 
       <ProductTable products={paginated} />
@@ -44,6 +46,6 @@ export default function AdminProductClient({ products }: { products: Product[] }
         totalPages={totalPages}
         onPageChange={setPage}
       />
-    </>
+    </div>
   )
 }

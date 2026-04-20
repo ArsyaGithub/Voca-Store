@@ -1,3 +1,5 @@
+import api from "../axios"
+import { getAuthHeaders } from "../auth-server"
 import { clientApi } from "../client-api"
 import { handleApiError } from "../utils"
 
@@ -151,6 +153,16 @@ export async function DeleteCloudinaryAssets(password : string) {
             }
         })
         return response
+    } catch(error: unknown){
+        handleApiError(error)
+    }
+}
+
+export async function GetOverview() {
+    try{
+        const headers = await getAuthHeaders()
+        const response = await api.get("/api/admin/overview", { headers })
+        return response.data
     } catch(error: unknown){
         handleApiError(error)
     }

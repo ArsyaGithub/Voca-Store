@@ -1,7 +1,7 @@
 "use client"
 
 import { GenericEditDialog, type GenericEditField } from "@/components/admin/GenericEdit"
-import { editProductAction } from "@/app/(admin)/control/actions"
+import { editProductAction } from "@/app/(admin)/overview/actions"
 import { Product } from "@/types/product"
 
 interface EditProductProps {

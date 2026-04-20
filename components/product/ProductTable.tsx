@@ -26,13 +26,15 @@ import Image from "next/image"
 import { formatRupiah } from "@/lib/utils"
 import { Product } from "@/types/product"
 import { deleteProduct } from "@/lib/api/product"
+import { div } from "three/src/nodes/math/OperatorNode.js"
 
 export default function ProductTable({ products }: { products: Product[] }) {
     const [editProduct, setEditProduct] = useState<Product | null>(null)
     const router = useRouter()
 
     return (
-        <>
+        <div className="space-y-5">
+           
             <div className="rounded-md border bg-white">
                 <Table>
                     <TableHeader>
@@ -130,7 +132,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
                     }}
                 />
             )}
-        </>
+        </div>
     )
 }
 

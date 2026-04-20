@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react"
 
 // 1. Definisikan Dictionary di luar komponen
 const routeLabels: Record<string, string> = {
-  "/control": "Overview",
+  "/overview": "Overview",
   "/check-products": "Cek Produk",
   "/add-products": "Tambah Produk",
   "/add-category": "Tambah Kategori",

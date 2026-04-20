@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Search, Send, Trash2 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { GetChatSessions, GetChatHistory, CloseChatSession } from "@/lib/api/chat";
+
 import { getWsConfig } from "@/lib/ws-config";
 
 interface ChatMessage {
@@ -21,6 +22,7 @@ interface SessionEntry {
   uid: string;
   user_id: number;
   user_name: string;
+  user_avatar: string;
   status: string;
   last_message: string;
   last_message_at: string;
@@ -32,7 +34,8 @@ export default function AdminChatPage() {
   const [selectedSessionUid, setSelectedSessionUid] = useState<string | null>(null);
   const [selectedUser, setSelectedUser] = useState<SessionEntry | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [inputValue, setInputValue] = useState("");
+   const [inputValue, setInputValue] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const ws = useRef<WebSocket | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -51,7 +54,14 @@ export default function AdminChatPage() {
     return [];
   };
 
-  const SESSIONS = getSessions();
+   const SESSIONS = getSessions();
+  const filteredSessions = SESSIONS.filter((session) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      (session.user_name || "").toLowerCase().includes(searchLower) ||
+      (session.last_message || "").toLowerCase().includes(searchLower)
+    );
+  });
 
   // HANDLE SESSION SELECTION
   useEffect(() => {
@@ -183,48 +193,62 @@ export default function AdminChatPage() {
   }, [messages]);
 
   return (
-    <div className="w-full h-[calc(100vh-130px)] pr-5">
-      <p className="text-xl font-bold text-slate-800 mb-5">Chat</p>
+    <div className="p-8 w-full h-[calc(100vh-130px)] pr-5">
+      <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Customer Service</h1>
+      <p className="text-slate-500 mb-5">Utility untuk menangani percakapan antara admin dan pelanggan.</p>
       <Card className="flex flex-row h-full w-full overflow-hidden border shadow-sm bg-white">
-        {/* SIDEBAR: Session List */}
         <div className="w-[350px] lg:w-[380px] flex-shrink-0 border-r flex flex-col h-full overflow-hidden bg-white">
           <div className="p-4 border-b shrink-0">
             <h2 className="text-xl font-bold mb-4">Messages</h2>
-            <div className="relative">
+             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <Input placeholder="Cari pelanggan..." className="pl-9" />
+              <Input 
+                placeholder="Cari pelanggan..." 
+                className="pl-9" 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
           <div className="flex-1 overflow-hidden">
             <ScrollArea className="h-full flex-1">
-              <div className="p-2 space-y-1">
-                {SESSIONS.map((session) => (
-                  <div
-                    key={session.uid}
-                    onClick={() => setSelectedSessionUid(session.uid)}
-                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${
-                      selectedSessionUid === session.uid ? "bg-slate-100" : "hover:bg-slate-50"
-                    }`}
-                  >
-                    <Avatar className="h-12 w-12 border">
-                      <AvatarFallback>{(session.user_name || "U")[0]}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-center">
-                        <span className="font-bold text-sm truncate">{session.user_name || "User"}</span>
-                        <span className="text-[10px] text-slate-400">
-                          {new Date(session.updated_at || session.created_at).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
+               <div className="p-2 space-y-1">
+                {filteredSessions.length > 0 ? (
+                  filteredSessions.map((session) => (
+                    <div
+                      key={session.uid}
+                      onClick={() => setSelectedSessionUid(session.uid)}
+                      className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${
+                        selectedSessionUid === session.uid ? "bg-slate-100" : "hover:bg-slate-50"
+                      }`}
+                    >
+                      <Avatar className="h-12 w-12 border">
+                        <AvatarImage src={session.user_avatar} alt={session.user_name} />
+                        <AvatarFallback>
+                          {(session.user_name || "P")[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-center">
+                          <span className="font-bold text-sm truncate">{session.user_name || "User"}</span>
+                          <span className="text-[10px] text-slate-400">
+                            {new Date(session.updated_at || session.created_at).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 truncate">
+                          {session.last_message || "Active chat..."}
+                        </p>
                       </div>
-                      <p className="text-xs text-slate-500 truncate">
-                        {session.last_message || "Active chat..."}
-                      </p>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center py-10 text-slate-400">
+                    <p className="text-sm">Tidak ada chat ditemukan</p>
                   </div>
-                ))}
+                )}
               </div>
             </ScrollArea>
           </div>
@@ -236,8 +260,11 @@ export default function AdminChatPage() {
               {/* Header */}
               <div className="p-4 border-b flex justify-between items-center shrink-0">
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-10 w-10 border">
-                    <AvatarFallback>{(selectedUser.user_name || "U")[0]}</AvatarFallback>
+                  <Avatar>
+                    <AvatarImage src={selectedUser.user_avatar} alt={selectedUser.user_name} />
+                    <AvatarFallback>
+                      {(selectedUser.user_name || "U")[0]}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="font-bold text-sm">{selectedUser.user_name || "User"}</p>

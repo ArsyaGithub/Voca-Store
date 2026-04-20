@@ -63,12 +63,12 @@ export default function AddProductPage() {
   }
 
   return (
-    <div className="p-6 bg-muted/20 min-h-screen">
+    <div className="p-8 bg-muted/20 min-h-screen">
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Create Product</h1>
-            <p className="text-muted-foreground">Add a new item to your <span>store&apos;</span>s inventory.</p>
+            <h1 className="text-3xl font-bold tracking-tight">Tambahkan Produk</h1>
+            <p className="text-muted-foreground">Tambahkan item baru ke inventaris toko Anda.</p>
           </div>
         </div>
 

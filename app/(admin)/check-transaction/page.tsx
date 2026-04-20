@@ -74,7 +74,6 @@ export default function CheckProductsPage() {
     }, [fetchOrders])
 
 
-    // Format tanggal
     const formatDate = (dateStr: string) => {
         return new Date(dateStr).toLocaleDateString('id-ID', {
             day: '2-digit',
@@ -84,50 +83,6 @@ export default function CheckProductsPage() {
             minute: '2-digit',
         })
     }
-
-    // const handleApprove = async (id: number) => {
-    //     try {
-    //         await verifyCartApproved(id)
-
-    //         // update state setelah API sukses
-    //         setOrders(prev =>
-    //             prev.map(order =>
-    //                 order.id === id
-    //                     ? { ...order, status: "approved" as OrderStatus }
-    //                     : order
-    //             )
-    //         )
-    //         notifySuccess("Pesanan di terima")
-    //     } catch (err) {
-    //         console.error("Gagal approve:", err)
-    //     }
-    // }
-
-
-    // // Handle Reject (local state only — belum ada endpoint API)
-    // const handleReject = async (id: number) => {
-    //     try {
-    //         await verifyCartRejected(id)
-
-    //         // update state setelah API sukses
-    //         setOrders(prev =>
-    //             prev.map(order =>
-    //                 order.id === id
-    //                     ? { ...order, status: "rejected" as OrderStatus }
-    //                     : order
-    //             )
-    //         )
-            
-    //         notifySuccess("Pesanan di tolaK")
-    //     } catch (err) {
-    //         console.error("Gagal reject:", err)
-    //     }
-    // }
-
-
-
-
-    // Statistik
     const pendingCount = orders.filter(o => o.status === 'pending').length
     const approvedCount = orders.filter(o => o.status === 'approved').length
     const totalRevenue = orders
@@ -150,7 +105,7 @@ export default function CheckProductsPage() {
     }
 
     return (
-       <div className="p-4 md:p-8 lg:p-12 xl:p-16 flex flex-col gap-10 md:gap-12 lg:gap-16 bg-white min-h-screen w-full mx-auto">
+       <div className="p-4 md:p-8 lg:p-12 xl:p-8 flex flex-col gap-10 md:gap-12 lg:gap-16 bg-white min-h-screen w-full mx-auto">
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Verifikasi Pesanan</h1>

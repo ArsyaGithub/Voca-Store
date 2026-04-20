@@ -10,7 +10,7 @@ export default async function UpdateProfilePage() {
   }
 
   // Tentukan URL kembali berdasarkan role  
-  const backUrl = user.role === "Admin" ? "/control" : "/"
+  const backUrl = user.role === "Admin" ? "/overview" : "/"
 
   return (
     <main className="container py-10 px-4 md:px-0">

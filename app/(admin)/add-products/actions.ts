@@ -15,7 +15,7 @@ export async function createProduct(
   try {
     await addProduct(formData)
 
-    revalidatePath("/control")
+    revalidatePath("/overview")
     return { message: "success" }
   } catch (error: unknown) {
     return { message: getErrorMessage(error, "Failed to create product.") }

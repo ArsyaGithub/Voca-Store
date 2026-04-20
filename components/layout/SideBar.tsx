@@ -5,14 +5,11 @@ import {
   Home,
   Inbox,
   User,
-  ChartBarStacked,
-  Ticket,
   Settings,
-  MessageCircle,
   Store,
-  Hammer,
   ChevronDown,
-  Wallet,
+  Navigation,
+  BookOpenText,
 } from "lucide-react";
 
 import {
@@ -35,12 +32,14 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { group } from "console";
+import { is } from "date-fns/locale";
 
 const menuGroups = [
   {
     group: "Dashboard",
     items: [
-      { title: "Control", url: "/control", icon: Home },
+      { title: "Overview", url: "/overview", icon: Home },
       { title: "System", url: "/system", icon: Settings },
     ],
   },
@@ -49,30 +48,41 @@ const menuGroups = [
     icon: Inbox,
     isCollapsible: true,
     items: [
-      { title: "Add Products", url: "/add-products", icon: Inbox },
-      { title: "Add Category", url: "/add-category", icon: ChartBarStacked },
-      { title: "Add Coupon", url: "/add-coupon", icon: Ticket },
-      { title: "Check Transaction", url: "/check-transaction", icon: Wallet },
+      { title: "Add Products", url: "/add-products" },
+      { title: "Add Category", url: "/add-category"},
+      { title: "Add Coupon", url: "/add-coupon" },
+      { title: "Check Transaction", url: "/check-transaction" },
+      { title: "Product Management", url: "/product-management" },
     ],
   },
   {
     group: "Navigation",
-    icon: Inbox,
+    icon: Navigation,
     isCollapsible: true,
     items: [
-      { title: "Home", url: "/", icon: Home },
-      { title: "Products", url: "/products", icon: ChartBarStacked },
-      { title: "Category", url: "/category", icon: Ticket },
-      { title: "Coupon", url: "/coupon", icon: Wallet },
+      { title: "Home", url: "/" },
+      { title: "Products", url: "/products" },
+      { title: "Category", url: "/category" },
+      { title: "Coupon", url: "/coupon" },
     ],
+  },
+  {
+    group: "Rules",
+    icon: BookOpenText,
+    isCollapsible: true,
+    items: [
+      { title: "Privacy", url: "/privacy"},
+      { title: "Refund", url: "/refund"},
+      { title: "Terms", url: "/terms"},
+    ]
   },
   {
     group: "User & Tools",
     icon: User,
     isCollapsible: true,
     items: [
-      { title: "Admin Tools", url: "/admin-tool", icon: Hammer },
-      { title: "Chat", url: "/customer-service", icon: MessageCircle },
+      { title: "Admin Tools", url: "/admin-tool"},
+      { title: "Chat", url: "/customer-service"},
     ],
   },
 ];
@@ -85,7 +95,7 @@ export function AdminSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/control">
+              <Link href="/overview">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <Store className="size-5" />
                 </div>
@@ -99,7 +109,7 @@ export function AdminSidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="no-scrollbar">
         {menuGroups.map((group) => {
           const GroupIcon = group.icon;
           return (

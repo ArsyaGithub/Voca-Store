@@ -8,7 +8,7 @@ export async function editProductAction(id: number, formData: FormData) {
   try {
     await updateProduct(id, formData)
 
-    revalidatePath("/control")
+    revalidatePath("/overview")
     return { success: true }
   } catch (error: unknown) {
     return {
@@ -22,7 +22,7 @@ export async function deleteProductAction(id: number) {
   try {
     await deleteProduct(id)
 
-    revalidatePath("/control")
+    revalidatePath("/overview")
     return { success: true }
   } catch (error: unknown) {
     return {

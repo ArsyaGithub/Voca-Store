@@ -1,26 +1,12 @@
 ﻿"use client"
-
 import { useState } from "react"
 import { Edit, Trash2, TicketPercent, Plus, Calendar } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+import {Card,CardContent,CardDescription,CardHeader,CardTitle,
 } from "@/components/ui/card"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "@/components/ui/table"
 import { GenericDelete } from "@/components/admin/GenericDelete"
 import { GenericEditDialog, type GenericEditField } from "@/components/admin/GenericEdit"
 import { formatRupiah } from "@/lib/utils"
@@ -299,4 +285,5 @@ function parseCouponPayload(values: {
       is_active: values.is_active === true || values.is_active === "true",
     },
   }
-}
+}
+

@@ -55,7 +55,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       }
 
       if (user.role === "Admin") {
-        router.push("/control")
+        router.push("/overview")
         return
       }
 
